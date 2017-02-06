@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from tw_conference_manager.engines import TextParser
 
 
-def test_parse_line():
+def test_parse_valid_line():
     "TextParser.parse_line() should receive a simple, valid line as string and return structured metadata"
 
     # Given an instance of TextParser
@@ -22,3 +22,7 @@ def test_parse_line():
 
     result['description'].should.equal('Writing Fast Tests Against Enterprise Rails')
     result['duration_in_minutes'].should.equal(60)
+
+
+def test_parse_multiple_valid_lines():
+    "TextParser.parse_line() should receive a simple, valid line as string and return structured metadata"

@@ -4,7 +4,7 @@ from tw_conference_manager.engines import TextParser
 
 
 def test_parse_line():
-    "TextParser.parse_line() should receive a simple line as string and return structured metadata"
+    "TextParser.parse_line() should receive a simple, valid line as string and return structured metadata"
 
     # Given an instance of TextParser
     parser = TextParser()

@@ -20,5 +20,5 @@ def test_parse_line():
     result.should.have.key('description').being.a(basestring)
     result.should.have.key('duration_in_minutes').being.an(int)
 
-    result['description'].should.qual('Writing Fast Tests Against Enterprise Rails')
-    result['duration_in_minutes'].should.qual(60)
+    result['description'].should.equal('Writing Fast Tests Against Enterprise Rails')
+    result['duration_in_minutes'].should.equal(60)

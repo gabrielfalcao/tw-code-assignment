@@ -6,3 +6,4 @@ pinocchio==0.4.2
 rednose==1.2.1
 ipdb==0.10.2
 coverage==4.3.4
+docker-compose==1.10.1

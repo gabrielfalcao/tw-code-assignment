@@ -10,6 +10,7 @@ MAINTAINER gabriel@nacaolivre.org
 RUN apt-get update \
   && apt-get --yes install \
     build-essential \
+    ca-certificates \
     coreutils \
     python-pip \
     python2.7 \
@@ -21,7 +22,7 @@ RUN pip install -U pip virtualenv
 RUN mkdir -p /srv/{src,venv}
 RUN virtualenv /srv/venv
 
-COPY . /srv/src/
+#COPY . /srv/src/
 
 WORKDIR /srv/src
 RUN pip install -r development.txt

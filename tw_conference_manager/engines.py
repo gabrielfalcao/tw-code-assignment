@@ -2,4 +2,5 @@
 
 
 class TextParser(object):
-    pass
+    def parse_line(self, line):
+        return {}

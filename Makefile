@@ -7,7 +7,7 @@ flake8		:= ./.venv/bin/flake8
 # main targets
 
 default: setup tests
-tests: smoke unit
+tests: smoke lint unit
 setup: clean venv pip
 
 # environment setup targets
@@ -30,8 +30,10 @@ smoke:
 	@$(python) -c 'from tw_conference_manager import engine'
 
 lint:
-	# checking imports for code smells
-	@$(flake8) -c 'from tw_conference_manager import engine'
+	# checking for code smells in main python module
+	@$(flake8) tw_conference_manager
+	# checking for code in test modules
+	@$(flake8) tests
 
 unit:
 	# running unit tests and reporting coverage:

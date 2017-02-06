@@ -49,27 +49,33 @@ def test_parse_valid_line_lightning():
     result['duration_in_minutes'].should.equal(5)
 
 
-# def test_parse_multiple_valid_lines():
-#     "TextParser.parse_multiline() should receive a list of valid line strings and return a list of structured metadata"
+def test_parse_multiple_valid_lines():
+    "TextParser.parse_multiline() should receive a list of valid line strings and return a list of structured metadata"
 
-#     # Given an instance of TextParser
-#     parser = TextParser()
+    # Given an instance of TextParser
+    parser = TextParser()
 
-#     # And list with 3 valid lines
-#     target_lines = '''
-#     Writing Fast Tests Against Enterprise Rails 60min
-#     Lua for the Masses 30min
-#     Rails for Python Developers lightning
-#     '''.splitlines()
+    # And list with 3 valid lines
+    target_lines = '''
+    Writing Fast Tests Against Enterprise Rails 60min
+    Lua for the Masses 30min
+    Rails for Python Developers lightning
+    '''.splitlines()
 
-#     # When I parse the list of lines
-#     result = parser.parse_multiline(target_lines)
+    # When I parse the list of lines
+    result = parser.parse_multiline(target_lines)
 
-#     # Then it should have returned a list with 3 members
-#     result.should.be.a(list)
-#     result.should.have.length_of(3)
-#     FIRST_LINE, SECOND_LINE, THIRD_LINE = result
+    # Then it should have returned a list with 3 members
+    result.should.be.a(list)
+    result.should.have.length_of(3)
+    FIRST_LINE, SECOND_LINE, THIRD_LINE = result
 
-#     FIRST_LINE.should.be.a(dict)
-#     SECOND_LINE.should.be.a(dict)
-#     THIRD_LINE.should.be.a(dict)
+    FIRST_LINE.should.be.a(dict)
+    SECOND_LINE.should.be.a(dict)
+    THIRD_LINE.should.be.a(dict)
+
+    result.should.equal([
+        {'duration_in_minutes': 60, 'description': u'Writing Fast Tests Against Enterprise Rails'},
+        {'duration_in_minutes': 30, 'description': u'Lua for the Masses'},
+        {'duration_in_minutes': 5, 'description': u'Rails for Python Developers'},
+    ])

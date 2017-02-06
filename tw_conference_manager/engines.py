@@ -18,7 +18,7 @@ class TextParser(object):
                 break
 
         if not found:
-            return
+            raise InvalidLineError(line)
 
         result = found.groupdict()
         duration = result.pop('duration')
@@ -31,3 +31,10 @@ class TextParser(object):
 
     def parse_multiline(self, multiple_strings):
         return [self.parse_line(line) for line in multiple_strings if line.strip()]
+
+
+class InvalidLineError(Exception):
+    def __init__(self, line):
+        tmpl = 'could not parse duration in string: "{line}"'
+        self.line = line
+        super(InvalidLineError, self).__init__(tmpl.format(**locals()))

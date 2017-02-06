@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from tw_conference_manager.engines import TextParser
+from tw_conference_manager.engines import InvalidLineError
 
 
 def test_parse_valid_line_with_minutes():
@@ -32,7 +33,7 @@ def test_parse_valid_line_lightning():
     # Given an instance of TextParser
     parser = TextParser()
 
-    # And a valid input in minutes
+    # And a valid lightning talk input line
     target = 'Rails for Python Developers lightning'
 
     # When I parse the target line
@@ -79,3 +80,22 @@ def test_parse_multiple_valid_lines():
         {'duration_in_minutes': 30, 'description': u'Lua for the Masses'},
         {'duration_in_minutes': 5, 'description': u'Rails for Python Developers'},
     ])
+
+
+def test_parse_invalid_line():
+    "TextParser.parse_line() should raise an exception that points out an invalid line"
+
+    # Given an instance of TextParser
+    parser = TextParser()
+
+    # And an invalid input line
+    invalid_target = 'Some Invalid Line Without Duration'
+
+    # When I try parse the target line
+    when_called = parser.parse_line.when.called_with(invalid_target)
+
+    # Then it should have raised InvalidLineError
+    when_called.should.have.raised(
+        InvalidLineError,
+        'could not parse duration in string: "Some Invalid Line Without Duration"'
+    )

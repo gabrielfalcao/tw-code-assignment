@@ -3,11 +3,11 @@
 import re
 
 
-class TextParser(object):
+class TextReader(object):
     minute_regex = re.compile(r'^(?P<description>.+)\s+(?P<duration>\d+)min$')
     lightning_regex = re.compile(r'^(?P<description>.+)\s+(?P<duration>lightning)$')
 
-    def parse_line(self, line):
+    def read_line(self, line):
         found = None
         result = None
         line = line.strip()
@@ -29,8 +29,8 @@ class TextParser(object):
 
         return result
 
-    def parse_multiline(self, multiple_strings):
-        return [self.parse_line(line) for line in multiple_strings if line.strip()]
+    def read_multiline(self, multiple_strings):
+        return [self.read_line(line) for line in multiple_strings if line.strip()]
 
 
 class InvalidLineError(Exception):

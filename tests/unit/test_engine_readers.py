@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from tw_conference_manager.engines import TextParser
-from tw_conference_manager.engines import InvalidLineError
+from tw_conference_manager.engine.readers import TextReader
+from tw_conference_manager.engine.readers import InvalidLineError
 
 
-def test_parse_valid_line_with_minutes():
-    "TextParser.parse_line() should receive a simple, valid line as string and return structured metadata"
+def test_read_valid_line_with_minutes():
+    "TextReader.read_line() should receive a simple, valid line as string and return structured metadata"
 
-    # Given an instance of TextParser
-    parser = TextParser()
+    # Given an instance of TextReader
+    parser = TextReader()
 
     # And a valid input in minutes
     target = 'Writing Fast Tests Against Enterprise Rails 60min'
 
     # When I parse the target line
-    result = parser.parse_line(target)
+    result = parser.read_line(target)
 
     # Then it should have returned a dictionary
     result.should.be.a(dict)
@@ -27,17 +27,17 @@ def test_parse_valid_line_with_minutes():
     result['duration_in_minutes'].should.equal(60)
 
 
-def test_parse_valid_line_lightning():
-    "TextParser.parse_line() should parse lightning talks in minutes"
+def test_read_valid_line_lightning():
+    "TextReader.read_line() should parse lightning talks in minutes"
 
-    # Given an instance of TextParser
-    parser = TextParser()
+    # Given an instance of TextReader
+    parser = TextReader()
 
     # And a valid lightning talk input line
     target = 'Rails for Python Developers lightning'
 
     # When I parse the target line
-    result = parser.parse_line(target)
+    result = parser.read_line(target)
 
     # Then it should have returned a dictionary
     result.should.be.a(dict)
@@ -50,11 +50,11 @@ def test_parse_valid_line_lightning():
     result['duration_in_minutes'].should.equal(5)
 
 
-def test_parse_multiple_valid_lines():
-    "TextParser.parse_multiline() should receive a list of valid line strings and return a list of structured metadata"
+def test_read_multiple_valid_lines():
+    "TextReader.read_multiline() should receive a list of valid line strings and return a list of structured metadata"
 
-    # Given an instance of TextParser
-    parser = TextParser()
+    # Given an instance of TextReader
+    parser = TextReader()
 
     # And list with 3 valid lines
     target_lines = '''
@@ -64,7 +64,7 @@ def test_parse_multiple_valid_lines():
     '''.splitlines()
 
     # When I parse the list of lines
-    result = parser.parse_multiline(target_lines)
+    result = parser.read_multiline(target_lines)
 
     # Then it should have returned a list with 3 members
     result.should.be.a(list)
@@ -82,17 +82,17 @@ def test_parse_multiple_valid_lines():
     ])
 
 
-def test_parse_invalid_line():
-    "TextParser.parse_line() should raise an exception that points out an invalid line"
+def test_read_invalid_line():
+    "TextReader.read_line() should raise an exception that points out an invalid line"
 
-    # Given an instance of TextParser
-    parser = TextParser()
+    # Given an instance of TextReader
+    parser = TextReader()
 
     # And an invalid input line
     invalid_target = 'Some Invalid Line Without Duration'
 
     # When I try parse the target line
-    when_called = parser.parse_line.when.called_with(invalid_target)
+    when_called = parser.read_line.when.called_with(invalid_target)
 
     # Then it should have raised InvalidLineError
     when_called.should.have.raised(

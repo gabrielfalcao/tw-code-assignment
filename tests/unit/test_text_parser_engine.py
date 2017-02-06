@@ -15,3 +15,10 @@ def test_parse_line():
 
     # Then it should have returned a dictionary
     result.should.be.a(dict)
+
+    # And it should contain the description and duration
+    result.should.have.key('description').being.a(basestring)
+    result.should.have.key('duration_in_minutes').being.an(int)
+
+    result['description'].should.qual('Writing Fast Tests Against Enterprise Rails')
+    result['duration_in_minutes'].should.qual(60)

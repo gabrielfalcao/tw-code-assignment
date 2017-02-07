@@ -46,8 +46,6 @@ class Model(object):
             and other.to_dict() == self.to_dict()
 
 
-
-
 class Talk(Model):
     __fields__ = (
         ('description', unicode),
@@ -100,14 +98,18 @@ class Session(Model):
     def allocate_talks(self, talks):
         remaining = TalkList()
         for talk in talks:
-            if self.available_minutes < talk.duration:
+            duration = talk.duration
+
+            if self.available_minutes < duration:
                 remaining.append(talk)
                 continue
 
             humanized_next_slot = self.next_slot.strftime("%H:%M%p")
             self.talks[humanized_next_slot] = talk
-            self.available_minutes -= talk.duration
-            self.next_slot = self.next_slot + timedelta(minutes=talk.duration)
+            if duration > 5:
+                duration += 10
+            self.available_minutes -= duration
+            self.next_slot = self.next_slot + timedelta(minutes=duration)
 
         return TalkList(*self.talks.values()), remaining
 

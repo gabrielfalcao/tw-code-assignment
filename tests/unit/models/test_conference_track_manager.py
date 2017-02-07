@@ -29,6 +29,6 @@ def test_track_allocate_talks():
     talks = TalkList.from_text(TEST_INPUT)
     allocated, remaining = conference.allocate_talks(talks)
 
-    allocated.should.have.length_of(19)
-    remaining.should.have.length_of(0)
+    allocated.should.have.length_of(16)
+    remaining.should.have.length_of(3)
     

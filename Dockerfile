@@ -16,6 +16,7 @@ RUN apt-get update \
     python-pip \
     python2.7 \
     python2.7-dev \
+    git-core \
     bash \
   && rm -rf /var/lib/apt/lists/*
 
@@ -33,4 +34,4 @@ COPY . /srv/src/
 
 WORKDIR /srv/src
 RUN pip install -r development.txt
-CMD ["make"]
+CMD ["make", "clean", "setup", "tests"]

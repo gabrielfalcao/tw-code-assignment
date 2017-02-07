@@ -34,4 +34,5 @@ def test_talk_to_dict():
 
     model = Talk('A DSL for expressive assertions', 'lightning')
 
-    model.to_dict().should.equal({'description': 'A DSL for expressive assertions', 'duration': 5})
+    model.to_dict().should.equal(
+        {'description': 'A DSL for expressive assertions', 'duration': 5})

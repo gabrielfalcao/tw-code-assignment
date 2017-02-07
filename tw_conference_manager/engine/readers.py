@@ -5,7 +5,8 @@ import re
 
 class TextReader(object):
     minute_regex = re.compile(r'^(?P<description>.+)\s+(?P<duration>\d+)min$')
-    lightning_regex = re.compile(r'^(?P<description>.+)\s+(?P<duration>lightning)$')
+    lightning_regex = re.compile(
+        r'^(?P<description>.+)\s+(?P<duration>lightning)$')
 
     def read_line(self, line):
         found = None
@@ -30,10 +31,11 @@ class TextReader(object):
         return result
 
     def read_multiline(self, multiple_strings):
-        return [self.read_line(line) for line in multiple_strings if line.strip()]
+        return [self.read_line(l) for l in multiple_strings if l.strip()]
 
 
 class InvalidLineError(Exception):
+
     def __init__(self, line):
         tmpl = 'could not parse duration in string: "{line}"'
         self.line = line

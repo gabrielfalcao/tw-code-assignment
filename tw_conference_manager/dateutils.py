@@ -24,7 +24,11 @@ def parse_time(string):
 
 
 class UnknownTimeFormat(Exception):
+
     def __init__(self, string):
         supported = ", ".join(TIME_FORMATS)
-        tmpl = 'the string "{string}" does not match any of the formats {supported}'
+        tmpl = (
+            'the string "{string}" does '
+            'not match any of the formats {supported}'
+        )
         super(UnknownTimeFormat, self).__init__(tmpl.format(**locals()))

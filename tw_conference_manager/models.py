@@ -17,7 +17,8 @@ class Model(object):
 
         data = OrderedDict()
         for name, cast in self.__fields__:
-            value = properties.get(name, arguments and arguments.pop(0) or None)
+            value = properties.get(
+                name, arguments and arguments.pop(0) or None)
 
             if value is not None:
                 value = cast(value)
@@ -32,26 +33,32 @@ class Model(object):
 
     def __repr__(self):
         name = self.__class__.__name__
-        fields = ", ".join(["{0}={1}".format(k, repr(v)) for k, v in self.data.items()])
+        fields = ", ".join(["{0}={1}".format(k, repr(v))
+                            for k, v in self.data.items()])
         return '{name}({fields})'.format(**locals())
 
     def to_dict(self):
         return dict([(k, v) for k, v in self.data.items()])
 
     def __eq__(self, other):
-        return id(self) == id(other) or isinstance(other, self.__class__) and other.to_dict() == self.to_dict()
+        return id(self) == id(other) \
+            or isinstance(other, self.__class__) \
+            and other.to_dict() == self.to_dict()
 
 
 class Talk(Model):
     __fields__ = (
         ('description', unicode),
-        ('duration', lambda duration: duration == 'lightning' and 5 or int(duration)),
+        ('duration', lambda duration: duration ==
+         'lightning' and 5 or int(duration)),
     )
 
 
 class TalkList(list):
+
     def __init__(self, *talks):
-        super(TalkList, self).__init__([t for t in talks if isinstance(t, Talk)])
+        super(TalkList, self).__init__(
+            [t for t in talks if isinstance(t, Talk)])
 
     @classmethod
     def from_text(cls, multiline_string):
@@ -102,6 +109,17 @@ class Session(Model):
 
         return TalkList(*self.talks.values()), remaining
 
+    def to_lines(self):
+        lines = []
+        for start_time, talk in self.talks.items():
+            description = talk.description
+            duration = talk.duration == 5 and 'lightning' or '{}min'.format(
+                talk.duration)
+            lines.append(
+                '{start_time} {description} {duration}'.format(**locals()))
+
+        return lines
+
 
 class Track(Model):
     __fields__ = (
@@ -119,13 +137,30 @@ class Track(Model):
         )
 
     def allocate_talks(self, talks):
-        remaining = talks
         allocated = TalkList()
 
-        morning, remaining = self.morning_session.allocate_talks(remaining)
-        afternoon, remaining = self.morning_session.allocate_talks(remaining)
+        morning, remaining = self.morning_session.allocate_talks(list(talks))
+        afternoon, remaining = self.morning_session.allocate_talks(
+            list(remaining))
 
         allocated.extend(morning)
         allocated.extend(afternoon)
 
         return allocated, remaining
+
+    def to_lines(self):
+        lines = ['Track {}:'.format(self.number)]
+
+        # morning talks
+        lines.extend(self.morning_session.to_lines())
+
+        # lunch break
+        lines.append('12:00PM Lunch')
+
+        # afternoon talks
+        lines.extend(self.afternoon_session.to_lines())
+
+        # networking event
+        lines.append('05:00PM Networking Event')
+
+        return lines

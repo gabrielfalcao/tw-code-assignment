@@ -32,8 +32,6 @@ smoke:
 lint:
 	# checking for code smells in main python module
 	@$(flake8) tw_conference_manager
-	# checking for code in test modules
-	@$(flake8) tests
 
 unit:
 	# running unit tests and reporting coverage:

@@ -1,6 +1,7 @@
 from datetime import timedelta
 from collections import OrderedDict
 
+from .engine.readers import TextReader
 from .dateutils import parse_time
 
 
@@ -33,6 +34,16 @@ class Talk(Model):
         ('description', unicode),
         ('duration', lambda duration: duration == 'lightning' and 5 or int(duration)),
     )
+
+
+class TalkList(object):
+    def __init__(self, *talks):
+        self.items = [t for t in talks if isinstance(t, Talk)]
+
+    @classmethod
+    def from_multiline_text(cls, lines):
+        reader = TextReader()
+        return [cls(**data) for data in reader.read_multiline(lines)]
 
 
 class Session(Model):

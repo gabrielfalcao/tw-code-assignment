@@ -23,9 +23,9 @@ class TextReader(object):
         result = found.groupdict()
         duration = result.pop('duration')
         if duration == 'lightning':
-            result['duration_in_minutes'] = 5
+            result['duration'] = 5
         else:
-            result['duration_in_minutes'] = int(duration)
+            result['duration'] = int(duration)
 
         return result
 

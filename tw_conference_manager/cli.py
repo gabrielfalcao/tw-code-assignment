@@ -29,7 +29,7 @@ def main():
     conference = ConferenceTrackManager(args.name)
 
     talks = TalkList.from_text(text)
-    allocated, remaining = conference.allocate_talks(talks)
+    conference.allocate_talks(talks)
 
     print "\n".join(conference.to_lines())
 

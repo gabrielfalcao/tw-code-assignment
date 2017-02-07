@@ -12,6 +12,7 @@ def test_session_allocate_talks():
     medium_talk = Talk('Medium Talk', 45)
     long_talk = Talk('Long Talk', 60)
     lightning_talk = Talk('Lightning', 5)
+    
     proposed_talks = TalkList(
         long_talk,
         medium_talk,

@@ -46,6 +46,8 @@ class Model(object):
             and other.to_dict() == self.to_dict()
 
 
+
+
 class Talk(Model):
     __fields__ = (
         ('description', unicode),
@@ -140,7 +142,7 @@ class Track(Model):
         allocated = TalkList()
 
         morning, remaining = self.morning_session.allocate_talks(list(talks))
-        afternoon, remaining = self.morning_session.allocate_talks(
+        afternoon, remaining = self.afternoon_session.allocate_talks(
             list(remaining))
 
         allocated.extend(morning)

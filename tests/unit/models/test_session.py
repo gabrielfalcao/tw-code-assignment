@@ -6,12 +6,12 @@ from tw_conference_manager.models import TalkList
 
 
 def test_session_allocate_talks():
-    "models.Session contains a list of talks"
+    "models.Session.allocate_talks() returns the allocated and the remaining talks"
 
     short_talk = Talk('Short Talk', 30)
     medium_talk = Talk('Medium Talk', 45)
     long_talk = Talk('Long Talk', 60)
-    lightning_talk = Talk('Lightning', 'lightning')
+    lightning_talk = Talk('Lightning', 5)
     proposed_talks = TalkList(
         long_talk,
         medium_talk,

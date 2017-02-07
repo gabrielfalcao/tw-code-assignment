@@ -20,8 +20,9 @@ class Model(object):
             value = properties.get(name, arguments and arguments.pop(0) or None)
 
             if value is not None:
+                value = cast(value)
                 data[name] = value
-                setattr(self, name, cast(value))
+                setattr(self, name, value)
 
         self.data = data
         self.initialize(**data)
@@ -34,11 +35,11 @@ class Model(object):
         fields = ", ".join(["{0}={1}".format(k, repr(v)) for k, v in self.data.items()])
         return '{name}({fields})'.format(**locals())
 
-    # def to_dict(self):
-    #     return dict([(k, v) for k, v in self.data.items()])
+    def to_dict(self):
+        return dict([(k, v) for k, v in self.data.items()])
 
-    # def __eq__(self, other):
-    #     return isinstance(other, self.__class__) and other.to_dict() == self.to_dict()
+    def __eq__(self, other):
+        return id(self) == id(other) or isinstance(other, self.__class__) and other.to_dict() == self.to_dict()
 
 
 class Talk(Model):
@@ -103,7 +104,11 @@ class Session(Model):
 
 
 class Track(Model):
-    def initialize(self):
+    __fields__ = (
+        ('number', int),
+    )
+
+    def initialize(self, number):
         self.morning_session = Session(
             starts_at='09:00AM',
             ends_at='12:00PM',

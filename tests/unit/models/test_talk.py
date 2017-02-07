@@ -27,3 +27,11 @@ def test_talk_lightning_talk():
     model.should.have.property('duration').being.equal(
         5
     )
+
+
+def test_talk_to_dict():
+    "models.Talk should be pre-serializable to a dict"
+
+    model = Talk('A DSL for expressive assertions', 'lightning')
+
+    model.to_dict().should.equal({'description': 'A DSL for expressive assertions', 'duration': 5})

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from tw_conference_manager.models import Talk
 from tw_conference_manager.models import TalkList
 from tw_conference_manager.models import Track
 from tw_conference_manager.models import Session
@@ -11,6 +12,9 @@ def test_track_has_sessions():
 
     # Given a Track instance
     track = Track(1)
+
+    # When I check its properties
+    track.should.have.property('number').being.equal(1)
 
     # It should have session instances
     track.should.have.property('morning_session').being.a(Session)
@@ -26,7 +30,7 @@ def test_track_has_sessions():
 
 
 def test_track_allocate_talks():
-    "models.Track contains a list of talks"
+    "models.Track contains a "
 
     track1 = Track(1)
 
@@ -35,26 +39,30 @@ def test_track_allocate_talks():
 
     allocated.should.have.length_of(4)
     remaining.should.have.length_of(15)
-    map(repr, allocated).should.equal([
-        "Talk(description='Writing Fast Tests Against Enterprise Rails', duration=60)",
-        "Talk(description='Overdoing it in Python', duration=45)",
-        "Talk(description='Lua for the Masses', duration=30)",
-        "Talk(description='Ruby Errors from Mismatched Gem Versions', duration=45)"
-    ])
-    map(repr, remaining).should.equal([
-        "Talk(description='Common Ruby Errors', duration=45)",
-        "Talk(description='Rails for Python Developers', duration=5)",
-        "Talk(description='Communicating Over Distance', duration=60)",
-        "Talk(description='Accounting-Driven Development', duration=45)",
-        "Talk(description='Woah', duration=30)",
-        "Talk(description='Sit Down and Write', duration=30)",
-        "Talk(description='Pair Programming vs Noise', duration=45)",
-        "Talk(description='Rails Magic', duration=60)",
-        "Talk(description='Ruby on Rails: Why We Should Move On', duration=60)",
-        "Talk(description='Clojure Ate Scala (on my project)', duration=45)",
-        "Talk(description='Programming in the Boondocks of Seattle', duration=30)",
-        "Talk(description='Ruby vs. Clojure for Back-End Development', duration=30)",
-        "Talk(description='Ruby on Rails Legacy App Maintenance', duration=60)",
-        "Talk(description='A World Without HackerNews', duration=30)",
-        "Talk(description='User Interface CSS in Rails Apps', duration=30)"
-    ])
+    allocated.should.equal(TalkList(
+        Talk(description='Writing Fast Tests Against Enterprise Rails', duration=60),
+        Talk(description='Overdoing it in Python', duration=45),
+        Talk(description='Lua for the Masses', duration=30),
+        Talk(description='Ruby Errors from Mismatched Gem Versions', duration=45)
+    ))
+    remaining.should.equal(TalkList(
+        Talk(description='Common Ruby Errors', duration=45),
+        Talk(description='Rails for Python Developers', duration=5),
+        Talk(description='Communicating Over Distance', duration=60),
+        Talk(description='Accounting-Driven Development', duration=45),
+        Talk(description='Woah', duration=30),
+        Talk(description='Sit Down and Write', duration=30),
+        Talk(description='Pair Programming vs Noise', duration=45),
+        Talk(description='Rails Magic', duration=60),
+        Talk(description='Ruby on Rails: Why We Should Move On', duration=60),
+        Talk(description='Clojure Ate Scala (on my project)', duration=45),
+        Talk(description='Programming in the Boondocks of Seattle', duration=30),
+        Talk(description='Ruby vs. Clojure for Back-End Development', duration=30),
+        Talk(description='Ruby on Rails Legacy App Maintenance', duration=60),
+        Talk(description='A World Without HackerNews', duration=30),
+        Talk(description='User Interface CSS in Rails Apps', duration=30)
+    ))
+
+
+def test_track_to_text():
+    "models.Track contains a list of talks"

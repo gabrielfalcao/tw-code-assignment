@@ -96,7 +96,7 @@ class Session(Model):
         return format_time(self.ends_at)
 
     def allocate_talks(self, talks):
-        remaining = []
+        remaining = TalkList()
         for talk in talks:
             if self.available_minutes < talk.duration:
                 remaining.append(talk)
@@ -163,4 +163,30 @@ class Track(Model):
         # networking event
         lines.append('05:00PM Networking Event')
 
+        return lines
+
+
+class ConferenceTrackManager(Model):
+    __fields__ = (
+        ('name', unicode),
+    )
+
+    def initialize(self, name):
+        self.track1 = Track(1)
+        self.track2 = Track(2)
+
+    def allocate_talks(self, talks):
+        allocated = TalkList()
+        track1, remaining = self.track1.allocate_talks(talks)
+        track2, remaining = self.track2.allocate_talks(remaining)
+
+        allocated.extend(track1)
+        allocated.extend(track2)
+
+        return allocated, remaining
+
+    def to_lines(self):
+        lines = []
+        lines.extend(self.track1.to_lines())
+        lines.extend(self.track2.to_lines())
         return lines

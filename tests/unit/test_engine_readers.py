@@ -21,10 +21,10 @@ def test_read_valid_line_with_minutes():
 
     # And it should contain the description and duration
     result.should.have.key('description').being.a(basestring)
-    result.should.have.key('duration_in_minutes').being.an(int)
+    result.should.have.key('duration').being.an(int)
 
     result['description'].should.equal('Writing Fast Tests Against Enterprise Rails')
-    result['duration_in_minutes'].should.equal(60)
+    result['duration'].should.equal(60)
 
 
 def test_read_valid_line_lightning():
@@ -44,10 +44,10 @@ def test_read_valid_line_lightning():
 
     # And it should contain the description and duration of 5 minutes
     result.should.have.key('description').being.a(basestring)
-    result.should.have.key('duration_in_minutes').being.an(int)
+    result.should.have.key('duration').being.an(int)
 
     result['description'].should.equal('Rails for Python Developers')
-    result['duration_in_minutes'].should.equal(5)
+    result['duration'].should.equal(5)
 
 
 def test_read_multiple_valid_lines():
@@ -76,9 +76,9 @@ def test_read_multiple_valid_lines():
     THIRD_LINE.should.be.a(dict)
 
     result.should.equal([
-        {'duration_in_minutes': 60, 'description': u'Writing Fast Tests Against Enterprise Rails'},
-        {'duration_in_minutes': 30, 'description': u'Lua for the Masses'},
-        {'duration_in_minutes': 5, 'description': u'Rails for Python Developers'},
+        {'duration': 60, 'description': u'Writing Fast Tests Against Enterprise Rails'},
+        {'duration': 30, 'description': u'Lua for the Masses'},
+        {'duration': 5, 'description': u'Rails for Python Developers'},
     ])
 
 

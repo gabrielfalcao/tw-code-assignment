@@ -1,11 +1,17 @@
+# -*- coding: utf-8 -*-
+
 from datetime import timedelta
 from collections import OrderedDict
 
-from .engine.readers import TextReader
 from .dateutils import parse_time
+from .dateutils import format_time
+
+from .engine.readers import TextReader
 
 
 class Model(object):
+    __fields__ = ()
+
     def __init__(self, *args, **properties):
         arguments = list(args)
 
@@ -28,6 +34,12 @@ class Model(object):
         fields = ", ".join(["{0}={1}".format(k, repr(v)) for k, v in self.data.items()])
         return '{name}({fields})'.format(**locals())
 
+    # def to_dict(self):
+    #     return dict([(k, v) for k, v in self.data.items()])
+
+    # def __eq__(self, other):
+    #     return isinstance(other, self.__class__) and other.to_dict() == self.to_dict()
+
 
 class Talk(Model):
     __fields__ = (
@@ -36,14 +48,22 @@ class Talk(Model):
     )
 
 
-class TalkList(object):
+class TalkList(list):
     def __init__(self, *talks):
-        self.items = [t for t in talks if isinstance(t, Talk)]
+        super(TalkList, self).__init__([t for t in talks if isinstance(t, Talk)])
 
     @classmethod
-    def from_multiline_text(cls, lines):
+    def from_text(cls, multiline_string):
+        lines = multiline_string.strip().splitlines()
         reader = TextReader()
-        return [cls(**data) for data in reader.read_multiline(lines)]
+        return cls(*[Talk(**data) for data in reader.read_multiline(lines)])
+
+    def extend(self, talks):
+        for talk in talks:
+            if isinstance(talk, Talk) and talk in self:
+                continue
+
+            self.append(talk)
 
 
 class Session(Model):
@@ -59,9 +79,16 @@ class Session(Model):
         self.next_slot = start
         self.available_minutes = (end - start).seconds / 60
 
+    @property
+    def start_time(self):
+        return format_time(self.starts_at)
+
+    @property
+    def end_time(self):
+        return format_time(self.ends_at)
+
     def allocate_talks(self, talks):
         remaining = []
-        # import ipdb;ipdb.set_trace()
         for talk in talks:
             if self.available_minutes < talk.duration:
                 remaining.append(talk)
@@ -72,4 +99,28 @@ class Session(Model):
             self.available_minutes -= talk.duration
             self.next_slot = self.next_slot + timedelta(minutes=talk.duration)
 
-        return self.talks.values(), remaining
+        return TalkList(*self.talks.values()), remaining
+
+
+class Track(Model):
+    def initialize(self):
+        self.morning_session = Session(
+            starts_at='09:00AM',
+            ends_at='12:00PM',
+        )
+        self.afternoon_session = Session(
+            starts_at='01:00PM',
+            ends_at='05:00PM',
+        )
+
+    def allocate_talks(self, talks):
+        remaining = talks
+        allocated = TalkList()
+
+        morning, remaining = self.morning_session.allocate_talks(remaining)
+        afternoon, remaining = self.morning_session.allocate_talks(remaining)
+
+        allocated.extend(morning)
+        allocated.extend(afternoon)
+
+        return allocated, remaining

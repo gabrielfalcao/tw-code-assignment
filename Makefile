@@ -6,7 +6,7 @@ flake8		:= ./.venv/bin/flake8
 
 # main targets
 
-default: setup tests
+default: tests
 tests: smoke lint unit
 setup: clean venv pip
 

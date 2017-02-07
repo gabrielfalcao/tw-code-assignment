@@ -35,5 +35,5 @@ def test_parse_time_unknown_format():
     when_called = parse_time.when.called_with('invalidtime')
     when_called.should.have.raised(
         UnknownTimeFormat,
-        'the string "invalidtime" does not match any of the formats %H%M, %H:%M%p, %H%p',
+        'the string "invalidtime" does not match any of the formats %I%M, %I:%M%p, %I%p',
     )

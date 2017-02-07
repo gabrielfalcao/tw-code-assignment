@@ -1,6 +1,10 @@
 from datetime import datetime
 
-TIME_FORMATS = ('%H%M', '%H:%M%p', '%H%p')
+TIME_FORMATS = ('%I%M', '%I:%M%p', '%I%p')
+
+
+def format_time(datetime_object):
+    return datetime_object.strftime("%I:%M%p")
 
 
 def parse_time(string):

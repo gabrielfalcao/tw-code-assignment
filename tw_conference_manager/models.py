@@ -16,7 +16,14 @@ class Model(object):
         arguments = list(args)
 
         data = OrderedDict()
-        for name, cast in self.__fields__:
+        fields = OrderedDict(self.__fields__)
+
+        for name in fields.keys():
+            cast = fields.get(name, None)
+
+            if cast is None:  # unknown field
+                continue
+
             value = properties.get(
                 name, arguments and arguments.pop(0) or None)
 
@@ -39,11 +46,6 @@ class Model(object):
 
     def to_dict(self):
         return dict([(k, v) for k, v in self.data.items()])
-
-    def __eq__(self, other):
-        return id(self) == id(other) \
-            or isinstance(other, self.__class__) \
-            and other.to_dict() == self.to_dict()
 
 
 class Talk(Model):
@@ -68,13 +70,6 @@ class TalkList(list):
         lines = multiline_string.strip().splitlines()
         reader = TextReader()
         return cls(*[Talk(**data) for data in reader.read_multiline(lines)])
-
-    def extend(self, talks):
-        for talk in talks:
-            if isinstance(talk, Talk) and talk in self:
-                continue
-
-            self.append(talk)
 
 
 class Session(Model):
@@ -189,11 +184,12 @@ class Track(Model):
 class ConferenceTrackManager(Model):
     __fields__ = (
         ('name', unicode),
+        ('tracks', list),
     )
 
-    def initialize(self, name):
-        self.track1 = Track(1)
-        self.track2 = Track(2)
+    def initialize(self, name, tracks=None):
+        if not tracks:
+            self.tracks = [Track(1)]
 
     def allocate_talks(self, talks):
         allocated = TalkList()

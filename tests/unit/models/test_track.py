@@ -28,6 +28,7 @@ def test_track_has_sessions():
     track.afternoon_session.start_time.should.equal('01:00PM')
     track.afternoon_session.end_time.should.equal('05:00PM')
 
+
 def test_track_filled_up():
     "models.Track.allocate_talks() fills up as much time as possible before networking event"
 
@@ -43,12 +44,56 @@ def test_minimize_open_time():
     track1 = Track(1)
     talks = TalkList(
         Talk("Long", 210),
-        Talk("Too Long", 60),  # not fit
-        Talk("Just Right", 30), # end morning
-        Talk("Long Afternoon", 195), 
+        Talk("Too Long", 60),
+        Talk("Just Right", 30),
+        Talk("Long Afternoon", 195),
         Talk("Too Long Afternoon", 60),
         Talk("Closest Afternoon", 30)
     )
 
     allocated, remaining = track1.allocate_talks(talks)
     allocated.should.have.length_of(4)
+
+
+def test_track_to_lines():
+    "models.Track.to_lines() returns a string representing the track and all its talks"
+
+    track1 = Track(1)
+
+    talks = TalkList.from_text('''
+    Writing Fast Tests Against Enterprise Rails 60min
+    Overdoing it in Python 45min
+    Lua for the Masses 30min
+    Ruby Errors from Mismatched Gem Versions 45min
+    Common Ruby Errors 45min
+    Rails for Python Developers lightning
+    Communicating Over Distance 60min
+    Accounting-Driven Development 45min
+    Woah 30min
+    Sit Down and Write 30min
+    Pair Programming vs Noise 45min
+    Rails Magic 60min
+    Ruby on Rails: Why We Should Move On 60min
+    Clojure Ate Scala (on my project) 45min
+    Programming in the Boondocks of Seattle 30min
+    Ruby vs. Clojure for Back-End Development 30min
+    Ruby on Rails Legacy App Maintenance 60min
+    A World Without HackerNews 30min
+    User Interface CSS in Rails Apps 30min
+    ''')
+    allocated, remaining = track1.allocate_talks(talks)
+
+    result = track1.to_lines()
+    result.should.equal([
+        'Track 1:',
+        '09:00AM Writing Fast Tests Against Enterprise Rails 60min',
+        '10:10AM Overdoing it in Python 45min',
+        '11:05AM Lua for the Masses 30min',
+        '11:45AM Rails for Python Developers lightning',
+        '12:00PM Lunch',
+        '01:00PM Ruby Errors from Mismatched Gem Versions 45min',
+        '01:55PM Common Ruby Errors 45min',
+        '02:50PM Communicating Over Distance 60min',
+        '04:00PM Accounting-Driven Development 45min',
+        '05:00PM Networking Event'
+    ])

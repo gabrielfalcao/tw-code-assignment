@@ -36,3 +36,11 @@ def test_talk_to_dict():
 
     model.to_dict().should.equal(
         {'description': 'A DSL for expressive assertions', 'duration': 5})
+
+
+def test_talk_is_lightning():
+    "models.Talk.is_lightning() should return True if duration is 5 minutes"
+
+    model = Talk('A DSL for expressive assertions', 'lightning')
+    model.is_lightning().should.be.true
+    

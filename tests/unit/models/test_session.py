@@ -63,6 +63,7 @@ def test_session_to_lines():
         '10:10AM Short Talk 30min',
     ])
 
+
 def test_session_to_lines_with_2_regular_talk():
     "Session should have 10-minute breaks between regular talks"
 
@@ -83,3 +84,54 @@ def test_session_to_lines_with_2_regular_talk():
     ])
 
 
+def test_session_to_lines_with_9_consecutive_lightning():
+    "Session should not have breaks between 2 consecutive lightning talks"
+
+    # Given a 30-minute session
+    short_session = Session(
+        starts_at='9:00AM',
+        ends_at='9:30AM',
+    )
+    # And 2 sequential lightning talks proposed
+    proposed_talks = TalkList(*[Talk('Light {0}'.format(i), 'lightning') for i in range(1, 3)])
+
+    # When I allocate_talks the talks
+    short_session.allocate_talks(proposed_talks)
+
+    # Then it should have 2 talks without breaks
+    short_session.to_lines().should.equal([
+        '09:00AM Light 1 lightning',
+        "09:05AM Light 2 lightning",
+    ])
+
+
+def test_session_to_lines_with_10_consecutive_lightning():
+    "Session should not have breaks between 2 consecutive lightning talks"
+
+    # Given a 50-minute session
+    short_session = Session(
+        starts_at='9:00AM',
+        ends_at='9:50AM',
+    )
+
+    # And 10 sequential lightning talks proposed to that session
+    proposed_talks = TalkList(*[Talk('Light {0}'.format(i), 'lightning') for i in range(1, 11)])
+
+    # When I allocate the talks
+    _, remaining = short_session.allocate_talks(proposed_talks)
+
+    # Then it should have 9 allocated talks
+    short_session.to_lines().should.equal([
+        '09:00AM Light 1 lightning',
+        "09:05AM Light 2 lightning",
+        "09:10AM Light 3 lightning",
+        "09:15AM Light 4 lightning",
+        "09:20AM Light 5 lightning",
+        "09:25AM Light 6 lightning",
+        "09:30AM Light 7 lightning",
+        "09:35AM Light 8 lightning",
+        "09:40AM Light 9 lightning",
+    ])
+
+    # And one talk should have remained unscheduled
+    remaining.should.have.length_of(1)

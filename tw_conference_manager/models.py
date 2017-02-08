@@ -53,6 +53,9 @@ class Talk(Model):
          'lightning' and 5 or int(duration)),
     )
 
+    def is_lightning(self):
+        return self.duration == 5
+
 
 class TalkList(list):
 
@@ -97,17 +100,30 @@ class Session(Model):
 
     def allocate_talks(self, talks):
         remaining = TalkList()
+        number_of_lightning_talks = 0
         for talk in talks:
             duration = talk.duration
+
+            if talk.is_lightning():
+                if number_of_lightning_talks == 9:
+                    number_of_lightning_talks = 0
+                    duration += 10
+
+                else:
+                    number_of_lightning_talks += 1
+            else:
+                number_of_lightning_talks = 0
 
             if self.available_minutes < duration:
                 remaining.append(talk)
                 continue
 
-            humanized_next_slot = self.next_slot.strftime("%H:%M%p")
-            self.talks[humanized_next_slot] = talk
-            if duration > 5:
+            if not talk.is_lightning():
                 duration += 10
+
+            humanized_next_slot = self.next_slot.strftime("%I:%M%p")
+            self.talks[humanized_next_slot] = talk
+
             self.available_minutes -= duration
             self.next_slot = self.next_slot + timedelta(minutes=duration)
 

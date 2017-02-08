@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from tw_conference_manager.models import TalkList
-from tests.unit.helpers import create_conference_and_schedule_talks
+from tests.functional.helpers import create_conference_and_schedule_talks
 
 
 TEST_INPUT = '''

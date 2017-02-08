@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from tw_conference_manager.models import ConferenceTrackManager
-from tests.unit.fixtures import default_proposed_talks
-from tests.unit.helpers import create_conference_and_schedule_talks
+from tests.functional.fixtures import default_proposed_talks
+from tests.functional.helpers import create_conference_and_schedule_talks
 
 
 def test_track_has_sessions():

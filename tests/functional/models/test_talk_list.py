@@ -1,6 +1,6 @@
 from tw_conference_manager.models import Talk
 from tw_conference_manager.models import TalkList
-from tests.unit.fixtures import TEST_INPUT
+from tests.functional.fixtures import TEST_INPUT
 
 
 def test_talk_list_from_text():

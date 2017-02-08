@@ -5,8 +5,8 @@ from tw_conference_manager.models import TalkList
 from tw_conference_manager.models import Track
 from tw_conference_manager.models import Session
 
-from tests.unit.helpers import create_track_and_allocate_talks
-from tests.unit.fixtures import default_proposed_talks
+from tests.functional.helpers import create_track_and_allocate_talks
+from tests.functional.fixtures import default_proposed_talks
 
 
 def test_track_has_sessions():

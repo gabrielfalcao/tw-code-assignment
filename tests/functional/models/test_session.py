@@ -3,7 +3,7 @@
 from tw_conference_manager.models import Talk
 from tw_conference_manager.models import Session
 from tw_conference_manager.models import TalkList
-from tests.unit.helpers import create_sequence_of_lightning_talks
+from tests.functional.helpers import create_sequence_of_lightning_talks
 
 
 def test_session_allocate_talks():

@@ -8,7 +8,7 @@ cli		:= ./.venv/bin/tw-conf-parse
 # main targets
 
 default: tests
-tests: smoke lint unit integration
+tests: smoke lint unit functional integration
 setup: clean venv pip
 
 # environment setup targets
@@ -39,6 +39,10 @@ lint:
 unit:
 	# running unit tests and reporting coverage:
 	@$(nose) --rednose --cover-erase tests/unit
+
+functional:
+	# running functional tests and reporting coverage:
+	@$(nose) --with-spec --spec-color --cover-erase tests/functional
 
 integration:
 	@$(cli) tests/fixtures.txt

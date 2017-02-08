@@ -10,6 +10,27 @@ from .engine.readers import TextReader
 
 
 class Model(object):
+    """Base model class, provides automatic attribute assignment, provides
+    utilities for validating and transforming values of its fields.
+
+    Example:
+
+    ::
+
+        from tw_conference_manager.models import Model
+
+        class Person(Model):
+            __fields__ = (
+                ('name', unicode),
+                ('email', bytes),
+            )
+
+        wole = Person('Wole', 'wole@thoughtworks.com')
+        assert wole.to_dict() == {
+            'name': 'Wole',
+            'email': 'wole@thoughtworks.com',
+        }
+    """
     __fields__ = ()
 
     def __init__(self, *args, **properties):
@@ -36,6 +57,11 @@ class Model(object):
         self.initialize(**data)
 
     def initialize(self, **cast_fields):
+        """this method gives an option for subclasses to take action upon
+        instantiation.
+
+        In other words this is a post-validation constructor method.
+        """
         pass
 
     def __repr__(self):
@@ -45,10 +71,16 @@ class Model(object):
         return '{name}({fields})'.format(**locals())
 
     def to_dict(self):
+        """returns a :py:class:`dict` containing the model fields"""
         return dict([(k, v) for k, v in self.data.items()])
 
 
 class Talk(Model):
+    """Model for storing basic talk information: description and duration.
+
+    Provides a utility function to check whether the talk is a
+    "lightning" one.
+    """
     __fields__ = (
         ('description', unicode),
         ('duration', lambda duration: duration ==
@@ -56,10 +88,15 @@ class Talk(Model):
     )
 
     def is_lightning(self):
+        """
+        :returns: :py:obj:`True` if the duration is `5` or :py:obj:`True`
+        """
         return self.duration == 5
 
 
 class TalkList(list):
+    """A subclass of :py:class:`list` with a shortcut method to parse a
+    list of strings."""
 
     def __init__(self, *talks):
         super(TalkList, self).__init__(
@@ -67,12 +104,21 @@ class TalkList(list):
 
     @classmethod
     def from_text(cls, multiline_string):
+        """creates a new :py:class:`TalkList` instance with talks parsed from the given parameter.
+        :param multiline_string: a list of strings
+        :returns: a new :py:class:`TalkList` with :py:class:`Talk` members
+        """
         lines = multiline_string.strip().splitlines()
         reader = TextReader()
         return cls(*[Talk(**data) for data in reader.read_multiline(lines)])
 
 
 class Session(Model):
+    """A model for declaring a session with start and end times.
+
+    Provides utility methods and properties to allocate talks and
+    generate human-readable output.
+    """
     __fields__ = (
         ('starts_at', parse_time),
         ('ends_at', parse_time),
@@ -94,6 +140,11 @@ class Session(Model):
         return format_time(self.ends_at)
 
     def allocate_talks(self, talks):
+        """Fills up an internal schedule with as many talks as possible.
+
+        :returns: a 2-item tuple containing a :py:class:`TalkList`
+            with **allocated** talks and another with **remaining** taiks.
+        """
         remaining = TalkList()
         number_of_lightning_talks = 0
         for talk in talks:
@@ -116,7 +167,7 @@ class Session(Model):
             if not talk.is_lightning():
                 duration += 10
 
-            humanized_next_slot = self.next_slot.strftime("%I:%M%p")
+            humanized_next_slot = format_time(self.next_slot)
             self.talks[humanized_next_slot] = talk
 
             self.available_minutes -= duration
@@ -125,6 +176,9 @@ class Session(Model):
         return TalkList(*self.talks.values()), remaining
 
     def to_lines(self):
+        """
+        :returns: a human-readable list of strings with the allocated talks.
+        """
         lines = []
         for start_time, talk in self.talks.items():
             description = talk.description
@@ -137,6 +191,9 @@ class Session(Model):
 
 
 class Track(Model):
+    """Model that contains 2 sessions, one holding a schedule for morning
+    sessions and one for afternoon sessions, respectively.
+    """
     __fields__ = (
         ('number', int),
     )
@@ -152,6 +209,9 @@ class Track(Model):
         )
 
     def allocate_talks(self, talks):
+        """Fills up an internal schedule with as many talks as possible on
+        both morning and afternoon sessions.
+        """
         allocated = TalkList()
 
         morning, remaining = self.morning_session.allocate_talks(list(talks))
@@ -164,6 +224,10 @@ class Track(Model):
         return allocated, remaining
 
     def to_lines(self):
+        """
+        :returns: a human-readable list of strings with the allocated talks.
+        """
+
         lines = ['Track {}:'.format(self.number)]
 
         # morning talks
@@ -182,6 +246,9 @@ class Track(Model):
 
 
 class ConferenceTrackManager(Model):
+    """Model that takes care of all aspects of scheduling an unlimited
+    list of talks into multiple tracks.
+    """
     __fields__ = (
         ('name', unicode),
         ('tracks', list),
@@ -192,6 +259,10 @@ class ConferenceTrackManager(Model):
             self.tracks = []
 
     def schedule_talks(self, talks):
+        """schedules all given talks into multiple tracks.
+        :param talks: a :py:class:`TalkList` with :py:class:`Talk` instances
+        :returns: a :py:class:`TalkList` with all tracks currently scheduled
+        """
         scheduled = TalkList()
         talks_remaining = talks
 
@@ -204,4 +275,7 @@ class ConferenceTrackManager(Model):
         return scheduled
 
     def to_lines(self):
+        """
+        :returns: a human-readable list of strings with the currently scheduled talks.
+        """
         return list(chain(*[track.to_lines() for track in self.tracks]))

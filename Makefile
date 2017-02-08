@@ -1,4 +1,13 @@
+OSNAME	:= $(shell uname)
+
+ifeq ($(OSNAME), Linux)
+OPEN	:= gnome-open
+else
+OPEN	:= open
+endif
+
 # using executable files from the virtualenv
+activate	:= ./.venv/bin/activate
 python		:= ./.venv/bin/python
 pip		:= ./.venv/bin/pip
 nose		:= ./.venv/bin/nosetests
@@ -51,4 +60,13 @@ docker:
 	docker build . -t tw-code-assignment
 	docker run tw-code-assignment
 
-.PHONY: tests
+html-docs:
+	# building documentation
+	@rm -rf docs/build
+	@source $(activate) && cd docs && make html singlehtml
+
+desktop-docs: html-docs
+	$(OPEN) docs/build/html/index.html
+
+
+.PHONY: tests docs

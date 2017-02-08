@@ -21,9 +21,6 @@ class Model(object):
         for name in fields.keys():
             cast = fields.get(name, None)
 
-            if cast is None:  # unknown field
-                continue
-
             value = properties.get(
                 name, arguments and arguments.pop(0) or None)
 
@@ -49,9 +46,6 @@ class Model(object):
 
     def to_dict(self):
         return dict([(k, v) for k, v in self.data.items()])
-
-    def __eq__(self, other):
-        return id(self) == id(other) or isinstance(other, self.__class__) and self.to_dict() == other.to_dict()
 
 
 class Talk(Model):
@@ -210,4 +204,4 @@ class ConferenceTrackManager(Model):
         return scheduled
 
     def to_lines(self):
-        return chain(*[track.to_lines() for track in self.tracks])
+        return list(chain(*[track.to_lines() for track in self.tracks]))

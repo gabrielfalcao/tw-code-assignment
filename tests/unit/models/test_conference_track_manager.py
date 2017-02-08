@@ -42,28 +42,35 @@ def test_conference_track_manager_to_lines():
     conference = ConferenceTrackManager('TWConf')
 
     talks = TalkList.from_text(TEST_INPUT)
-    scheduled = conference.schedule_talks(talks)
+    conference.schedule_talks(talks)
 
-    scheduled.should.have.length_of(19)
-
-    scheduled.should.equal(TalkList(
-        Talk(description=u'Writing Fast Tests Against Enterprise Rails', duration=60),
-        Talk(description=u'Overdoing it in Python', duration=45),
-        Talk(description=u'Lua for the Masses', duration=30),
-        Talk(description=u'Rails for Python Developers', duration=5),
-        Talk(description=u'Ruby Errors from Mismatched Gem Versions', duration=45),
-        Talk(description=u'Common Ruby Errors', duration=45),
-        Talk(description=u'Communicating Over Distance', duration=60),
-        Talk(description=u'Accounting-Driven Development', duration=45),
-        Talk(description=u'Woah', duration=30),
-        Talk(description=u'Sit Down and Write', duration=30),
-        Talk(description=u'Pair Programming vs Noise', duration=45),
-        Talk(description=u'Clojure Ate Scala (on my project)', duration=45),
-        Talk(description=u'Rails Magic', duration=60),
-        Talk(description=u'Ruby on Rails: Why We Should Move On', duration=60),
-        Talk(description=u'Programming in the Boondocks of Seattle', duration=30),
-        Talk(description=u'Ruby vs. Clojure for Back-End Development', duration=30),
-        Talk(description=u'Ruby on Rails Legacy App Maintenance', duration=60),
-        Talk(description=u'A World Without HackerNews', duration=30),
-        Talk(description=u'User Interface CSS in Rails Apps', duration=30),
-    ))
+    conference.to_lines().should.equal([
+        'Track 1:',
+        '09:00AM Writing Fast Tests Against Enterprise Rails 60min',
+        '10:10AM Overdoing it in Python 45min',
+        '11:05AM Lua for the Masses 30min',
+        '11:45AM Rails for Python Developers lightning',
+        '12:00PM Lunch',
+        '01:00PM Ruby Errors from Mismatched Gem Versions 45min',
+        '01:55PM Common Ruby Errors 45min',
+        '02:50PM Communicating Over Distance 60min',
+        '04:00PM Accounting-Driven Development 45min',
+        '05:00PM Networking Event',
+        'Track 2:',
+        '09:00AM Woah 30min',
+        '09:40AM Sit Down and Write 30min',
+        '10:20AM Pair Programming vs Noise 45min',
+        '11:15AM Clojure Ate Scala (on my project) 45min',
+        '12:00PM Lunch',
+        '01:00PM Rails Magic 60min',
+        '02:10PM Ruby on Rails: Why We Should Move On 60min',
+        '03:20PM Programming in the Boondocks of Seattle 30min',
+        '04:00PM Ruby vs. Clojure for Back-End Development 30min',
+        '05:00PM Networking Event',
+        'Track 3:',
+        '09:00AM Ruby on Rails Legacy App Maintenance 60min',
+        '10:10AM A World Without HackerNews 30min',
+        '10:50AM User Interface CSS in Rails Apps 30min',
+        '12:00PM Lunch',
+        '05:00PM Networking Event'
+    ])

@@ -1,0 +1,558 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Conference Track Manager 0.0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="None" href="index.html#document-index"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html#document-index" class="icon icon-home"> Conference Track Manager
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1
+              </div>
+            
+          
+
+          
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-intro">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-guide">Development Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-api">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html#document-index">Conference Track Manager</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html#document-index">Docs</a> &raquo;</li>
+      
+    <li>Conference Track Manager 0.0.1 documentation</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="conference-track-manager-documentation">
+<h1>Conference Track Manager - Documentation<a class="headerlink" href="#conference-track-manager-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<span id="document-intro"></span><div class="section" id="id1">
+<h2>Introduction<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>This library automates the planning of a big programming conference
+with many proposals which have passed the initial screen process and
+are only pending placement in a conference schedule.</p>
+<ul class="simple">
+<li>Are you new to this? Check out the <a class="reference internal" href="index.html#guide"><span class="std std-ref">Build a docker image</span></a></li>
+<li>Or go straight to the <a class="reference internal" href="index.html#api"><span class="std std-ref">API Reference</span></a></li>
+</ul>
+</div>
+<span id="document-guide"></span><div class="section" id="development-guide">
+<h2>Development Guide<a class="headerlink" href="#development-guide" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The instructions below assume that you have a <em>bash</em> console
+to your avail. It has been tested on <a class="reference external" href="https://www.apple.com/macos/sierra/">MacOSX Sierra</a> with
+<a class="reference external" href="http://brew.sh/">Homebrew **1.1.9**</a></p>
+</div>
+<p><strong>Features:</strong></p>
+<ul class="simple">
+<li>unit + functional tests with coverage report</li>
+<li><code class="docutils literal"><span class="pre">Makefile</span></code> targets to automate menial development tasks</li>
+<li><code class="docutils literal"><span class="pre">Dockerfile</span></code> that builds and tests the project in a sandboxed container</li>
+<li>Auto-generated API documentation</li>
+</ul>
+<div class="section" id="build-a-docker-image">
+<span id="guide"></span><h3>Build a docker image<a class="headerlink" href="#build-a-docker-image" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Tested on <a class="reference external" href="https://docs.docker.com/docker-for-mac/">Docker for Mac</a> version <code class="docutils literal"><span class="pre">1.13.0</span> <span class="pre">(5072)</span></code></p>
+</div>
+<div class="code bash highlight-bash"><div class="highlight"><pre><span></span>docker build . -t tw-code-assignment
+docker run tw-code-assignment
+</pre></div>
+</div>
+</div>
+<div class="section" id="preparing-a-local-development-environment">
+<h3>Preparing a local development environment<a class="headerlink" href="#preparing-a-local-development-environment" title="Permalink to this headline">¶</a></h3>
+<p><strong>Ensure system dependencies:</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="67%" />
+<col width="33%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Python</strong></td>
+<td>2.7.13</td>
+</tr>
+<tr class="row-even"><td><strong>virtualenv</strong></td>
+<td>15.1.0</td>
+</tr>
+<tr class="row-odd"><td><strong>GNU Make</strong></td>
+<td>3.81</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Run the automated build install targets:</strong></p>
+<div class="code bash highlight-bash"><div class="highlight"><pre><span></span>make setup
+</pre></div>
+</div>
+<p><strong>Breakdown of installation commands:</strong></p>
+<div class="code bash highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># 1. Create and enter a virtual-env</span>
+virtualenv .venv
+
+<span class="c1"># 2. Enter the virtual-env</span>
+<span class="nb">source</span> .venv/bin/activate
+
+<span class="c1"># 3. Upgrade pip</span>
+pip install -U pip
+
+<span class="c1"># 4. Install local dependencies</span>
+pip install -r development.txt
+</pre></div>
+</div>
+<p><strong>Run the automated tests:</strong></p>
+<div class="code bash highlight-bash"><div class="highlight"><pre><span></span>make tests
+</pre></div>
+</div>
+</div>
+<div class="section" id="instalation">
+<h3>Instalation<a class="headerlink" href="#instalation" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>python setup.py install
+</pre></div>
+</div>
+</div>
+<div class="section" id="command-line-example">
+<h3>Command-Line Example<a class="headerlink" href="#command-line-example" title="Permalink to this headline">¶</a></h3>
+<div class="code bash highlight-bash"><div class="highlight"><pre><span></span>$ cat test-input.txt <span class="s">&lt;&lt;EOF</span>
+<span class="s">Writing Fast Tests Against Enterprise Rails 60min</span>
+<span class="s">Overdoing it in Python 45min</span>
+<span class="s">Lua for the Masses 30min</span>
+<span class="s">Ruby Errors from Mismatched Gem Versions 45min</span>
+<span class="s">Common Ruby Errors 45min</span>
+<span class="s">Rails for Python Developers lightning</span>
+<span class="s">Communicating Over Distance 60min</span>
+<span class="s">Accounting-Driven Development 45min</span>
+<span class="s">Woah 30min</span>
+<span class="s">Sit Down and Write 30min</span>
+<span class="s">Pair Programming vs Noise 45min</span>
+<span class="s">Rails Magic 60min</span>
+<span class="s">Ruby on Rails: Why We Should Move On 60min</span>
+<span class="s">Clojure Ate Scala (on my project) 45min</span>
+<span class="s">Programming in the Boondocks of Seattle 30min</span>
+<span class="s">Ruby vs. Clojure for Back-End Development 30min</span>
+<span class="s">Ruby on Rails Legacy App Maintenance 60min</span>
+<span class="s">A World Without HackerNews 30min</span>
+<span class="s">User Interface CSS in Rails Apps 30min</span>
+<span class="s">EOF</span>
+$ tw-conf-parse test-input.txt
+</pre></div>
+</div>
+</div>
+</div>
+<span id="document-api"></span><div class="section" id="api-reference">
+<span id="api"></span><h2>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="engine">
+<span id="backends"></span><h3>engine<a class="headerlink" href="#engine" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="tw_conference_manager.engine.readers.TextReader">
+<em class="property">class </em><code class="descclassname">tw_conference_manager.engine.readers.</code><code class="descname">TextReader</code><a class="reference internal" href="_modules/tw_conference_manager/engine/readers.html#TextReader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tw_conference_manager.engine.readers.TextReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Object that can parse lines containing descriptions and durations
+of proposed conference talks.</p>
+<dl class="method">
+<dt id="tw_conference_manager.engine.readers.TextReader.read_line">
+<code class="descname">read_line</code><span class="sig-paren">(</span><em>line</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tw_conference_manager/engine/readers.html#TextReader.read_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tw_conference_manager.engine.readers.TextReader.read_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>extracts metadata from a single line of text.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>line</strong> &#8211; a <code class="xref py py-class docutils literal"><span class="pre">basestring</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a <a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> containing the keys <code class="docutils literal"><span class="pre">description</span></code> and <code class="docutils literal"><span class="pre">duration</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">InvalidLineError</span></code> when the line does not contain a valid duration.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="tw_conference_manager.engine.readers.TextReader.read_multiline">
+<code class="descname">read_multiline</code><span class="sig-paren">(</span><em>multiple_strings</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tw_conference_manager/engine/readers.html#TextReader.read_multiline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tw_conference_manager.engine.readers.TextReader.read_multiline" title="Permalink to this definition">¶</a></dt>
+<dd><p>parses a multi-line string.
+:returns: a list of <a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> as in <code class="xref py py-meth docutils literal"><span class="pre">read_line()</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tw_conference_manager.engine.readers.TextReader.lightning_regex">
+<code class="descname">lightning_regex</code><em class="property"> = &lt;_sre.SRE_Pattern object&gt;</em><a class="headerlink" href="#tw_conference_manager.engine.readers.TextReader.lightning_regex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="tw_conference_manager.engine.readers.TextReader.minute_regex">
+<code class="descname">minute_regex</code><em class="property"> = &lt;_sre.SRE_Pattern object&gt;</em><a class="headerlink" href="#tw_conference_manager.engine.readers.TextReader.minute_regex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="models">
+<h3>models<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="tw_conference_manager.models.Model">
+<em class="property">class </em><code class="descclassname">tw_conference_manager.models.</code><code class="descname">Model</code><span class="sig-paren">(</span><em>*args</em>, <em>**properties</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tw_conference_manager/models.html#Model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tw_conference_manager.models.Model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Base model class, provides automatic attribute assignment, provides
+utilities for validating and transforming values of its fields.</p>
+<p>Example:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>from tw_conference_manager.models import Model
+
+class Person<span class="o">(</span>Model<span class="o">)</span>:
+    <span class="nv">__fields__</span> <span class="o">=</span> <span class="o">(</span>
+        <span class="o">(</span><span class="s1">&#39;name&#39;</span>, unicode<span class="o">)</span>,
+        <span class="o">(</span><span class="s1">&#39;email&#39;</span>, bytes<span class="o">)</span>,
+    <span class="o">)</span>
+
+<span class="nv">wole</span> <span class="o">=</span> Person<span class="o">(</span><span class="s1">&#39;Wole&#39;</span>, <span class="s1">&#39;wole@thoughtworks.com&#39;</span><span class="o">)</span>
+assert wole.to_dict<span class="o">()</span> <span class="o">==</span> <span class="o">{</span>
+    <span class="s1">&#39;name&#39;</span>: <span class="s1">&#39;Wole&#39;</span>,
+    <span class="s1">&#39;email&#39;</span>: <span class="s1">&#39;wole@thoughtworks.com&#39;</span>,
+<span class="o">}</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="tw_conference_manager.models.Model.initialize">
+<code class="descname">initialize</code><span class="sig-paren">(</span><em>**cast_fields</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tw_conference_manager/models.html#Model.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tw_conference_manager.models.Model.initialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>this method gives an option for subclasses to take action upon
+instantiation.</p>
+<p>In other words this is a post-validation constructor method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tw_conference_manager.models.Model.to_dict">
+<code class="descname">to_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tw_conference_manager/models.html#Model.to_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tw_conference_manager.models.Model.to_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns a <a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a> containing the model fields</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="tw_conference_manager.models.Talk">
+<em class="property">class </em><code class="descclassname">tw_conference_manager.models.</code><code class="descname">Talk</code><span class="sig-paren">(</span><em>*args</em>, <em>**properties</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tw_conference_manager/models.html#Talk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tw_conference_manager.models.Talk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tw_conference_manager.models.Model" title="tw_conference_manager.models.Model"><code class="xref py py-class docutils literal"><span class="pre">tw_conference_manager.models.Model</span></code></a></p>
+<p>Model for storing basic talk information: description and duration.</p>
+<p>Provides a utility function to check whether the talk is a
+&#8220;lightning&#8221; one.</p>
+<dl class="method">
+<dt id="tw_conference_manager.models.Talk.is_lightning">
+<code class="descname">is_lightning</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tw_conference_manager/models.html#Talk.is_lightning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tw_conference_manager.models.Talk.is_lightning" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/constants.html#True" title="(in Python v2.7)"><code class="xref py py-obj docutils literal"><span class="pre">True</span></code></a> if the duration is <cite>5</cite> or <a class="reference external" href="https://docs.python.org/2/library/constants.html#True" title="(in Python v2.7)"><code class="xref py py-obj docutils literal"><span class="pre">True</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="tw_conference_manager.models.TalkList">
+<em class="property">class </em><code class="descclassname">tw_conference_manager.models.</code><code class="descname">TalkList</code><span class="sig-paren">(</span><em>*talks</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tw_conference_manager/models.html#TalkList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tw_conference_manager.models.TalkList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a></p>
+<p>A subclass of <a class="reference external" href="https://docs.python.org/2/library/functions.html#list" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a> with a shortcut method to parse a
+list of strings.</p>
+<dl class="classmethod">
+<dt id="tw_conference_manager.models.TalkList.from_text">
+<em class="property">classmethod </em><code class="descname">from_text</code><span class="sig-paren">(</span><em>multiline_string</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tw_conference_manager/models.html#TalkList.from_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tw_conference_manager.models.TalkList.from_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>creates a new <code class="xref py py-class docutils literal"><span class="pre">TalkList</span></code> instance with talks parsed from the given parameter.
+:param multiline_string: a list of strings
+:returns: a new <code class="xref py py-class docutils literal"><span class="pre">TalkList</span></code> with <code class="xref py py-class docutils literal"><span class="pre">Talk</span></code> members</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="tw_conference_manager.models.Session">
+<em class="property">class </em><code class="descclassname">tw_conference_manager.models.</code><code class="descname">Session</code><span class="sig-paren">(</span><em>*args</em>, <em>**properties</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tw_conference_manager/models.html#Session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tw_conference_manager.models.Session" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tw_conference_manager.models.Model" title="tw_conference_manager.models.Model"><code class="xref py py-class docutils literal"><span class="pre">tw_conference_manager.models.Model</span></code></a></p>
+<p>A model for declaring a session with start and end times.</p>
+<p>Provides utility methods and properties to allocate talks and
+generate human-readable output.</p>
+<dl class="method">
+<dt id="tw_conference_manager.models.Session.allocate_talks">
+<code class="descname">allocate_talks</code><span class="sig-paren">(</span><em>talks</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tw_conference_manager/models.html#Session.allocate_talks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tw_conference_manager.models.Session.allocate_talks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fills up an internal schedule with as many talks as possible.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a 2-item tuple containing a <code class="xref py py-class docutils literal"><span class="pre">TalkList</span></code>
+with <strong>allocated</strong> talks and another with <strong>remaining</strong> taiks.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="tw_conference_manager.models.Session.initialize">
+<code class="descname">initialize</code><span class="sig-paren">(</span><em>starts_at</em>, <em>ends_at</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tw_conference_manager/models.html#Session.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tw_conference_manager.models.Session.initialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tw_conference_manager.models.Session.to_lines">
+<code class="descname">to_lines</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tw_conference_manager/models.html#Session.to_lines"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tw_conference_manager.models.Session.to_lines" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a human-readable list of strings with the allocated talks.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tw_conference_manager.models.Session.end_time">
+<code class="descname">end_time</code><a class="headerlink" href="#tw_conference_manager.models.Session.end_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="tw_conference_manager.models.Session.start_time">
+<code class="descname">start_time</code><a class="headerlink" href="#tw_conference_manager.models.Session.start_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="tw_conference_manager.models.Track">
+<em class="property">class </em><code class="descclassname">tw_conference_manager.models.</code><code class="descname">Track</code><span class="sig-paren">(</span><em>*args</em>, <em>**properties</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tw_conference_manager/models.html#Track"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tw_conference_manager.models.Track" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tw_conference_manager.models.Model" title="tw_conference_manager.models.Model"><code class="xref py py-class docutils literal"><span class="pre">tw_conference_manager.models.Model</span></code></a></p>
+<p>Model that contains 2 sessions, one holding a schedule for morning
+sessions and one for afternoon sessions, respectively.</p>
+<dl class="method">
+<dt id="tw_conference_manager.models.Track.allocate_talks">
+<code class="descname">allocate_talks</code><span class="sig-paren">(</span><em>talks</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tw_conference_manager/models.html#Track.allocate_talks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tw_conference_manager.models.Track.allocate_talks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fills up an internal schedule with as many talks as possible on
+both morning and afternoon sessions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tw_conference_manager.models.Track.initialize">
+<code class="descname">initialize</code><span class="sig-paren">(</span><em>number</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tw_conference_manager/models.html#Track.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tw_conference_manager.models.Track.initialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tw_conference_manager.models.Track.to_lines">
+<code class="descname">to_lines</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tw_conference_manager/models.html#Track.to_lines"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tw_conference_manager.models.Track.to_lines" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a human-readable list of strings with the allocated talks.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="tw_conference_manager.models.ConferenceTrackManager">
+<em class="property">class </em><code class="descclassname">tw_conference_manager.models.</code><code class="descname">ConferenceTrackManager</code><span class="sig-paren">(</span><em>*args</em>, <em>**properties</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tw_conference_manager/models.html#ConferenceTrackManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tw_conference_manager.models.ConferenceTrackManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tw_conference_manager.models.Model" title="tw_conference_manager.models.Model"><code class="xref py py-class docutils literal"><span class="pre">tw_conference_manager.models.Model</span></code></a></p>
+<p>Model that takes care of all aspects of scheduling an unlimited
+list of talks into multiple tracks.</p>
+<dl class="method">
+<dt id="tw_conference_manager.models.ConferenceTrackManager.initialize">
+<code class="descname">initialize</code><span class="sig-paren">(</span><em>name</em>, <em>tracks=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tw_conference_manager/models.html#ConferenceTrackManager.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tw_conference_manager.models.ConferenceTrackManager.initialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tw_conference_manager.models.ConferenceTrackManager.schedule_talks">
+<code class="descname">schedule_talks</code><span class="sig-paren">(</span><em>talks</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tw_conference_manager/models.html#ConferenceTrackManager.schedule_talks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tw_conference_manager.models.ConferenceTrackManager.schedule_talks" title="Permalink to this definition">¶</a></dt>
+<dd><p>schedules all given talks into multiple tracks.
+:param talks: a <code class="xref py py-class docutils literal"><span class="pre">TalkList</span></code> with <code class="xref py py-class docutils literal"><span class="pre">Talk</span></code> instances
+:returns: a <code class="xref py py-class docutils literal"><span class="pre">TalkList</span></code> with all tracks currently scheduled</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tw_conference_manager.models.ConferenceTrackManager.to_lines">
+<code class="descname">to_lines</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tw_conference_manager/models.html#ConferenceTrackManager.to_lines"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tw_conference_manager.models.ConferenceTrackManager.to_lines" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a human-readable list of strings with the currently scheduled talks.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Gabriel Falcao - for ThoughtWorks.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

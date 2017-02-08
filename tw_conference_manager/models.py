@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from itertools import chain
 from datetime import timedelta
 from collections import OrderedDict
 
@@ -29,8 +29,11 @@ class Model(object):
 
             if value is not None:
                 value = cast(value)
-                data[name] = value
-                setattr(self, name, value)
+            else:
+                value = cast()
+
+            data[name] = value
+            setattr(self, name, value)
 
         self.data = data
         self.initialize(**data)
@@ -46,6 +49,9 @@ class Model(object):
 
     def to_dict(self):
         return dict([(k, v) for k, v in self.data.items()])
+
+    def __eq__(self, other):
+        return id(self) == id(other) or isinstance(other, self.__class__) and self.to_dict() == other.to_dict()
 
 
 class Talk(Model):
@@ -189,20 +195,19 @@ class ConferenceTrackManager(Model):
 
     def initialize(self, name, tracks=None):
         if not tracks:
-            self.tracks = [Track(1)]
+            self.tracks = []
 
-    def allocate_talks(self, talks):
-        allocated = TalkList()
-        track1, remaining = self.track1.allocate_talks(talks)
-        track2, remaining = self.track2.allocate_talks(remaining)
+    def schedule_talks(self, talks):
+        scheduled = TalkList()
+        talks_remaining = talks
 
-        allocated.extend(track1)
-        allocated.extend(track2)
+        while talks_remaining:
+            current_track = Track(len(self.tracks) + 1)
+            self.tracks.append(current_track)
+            allocated, talks_remaining = current_track.allocate_talks(talks_remaining)
+            scheduled.extend(allocated)
 
-        return allocated, remaining
+        return scheduled
 
     def to_lines(self):
-        lines = []
-        lines.extend(self.track1.to_lines())
-        lines.extend(self.track2.to_lines())
-        return lines
+        return chain(*[track.to_lines() for track in self.tracks])

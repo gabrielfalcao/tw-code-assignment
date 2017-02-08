@@ -43,7 +43,7 @@ smoke:
 
 lint:
 	# checking for code smells in main python module
-	@$(flake8) tw_conference_manager
+	@$(flake8) --ignore=E501 tw_conference_manager
 
 unit:
 	# running unit tests and reporting coverage:

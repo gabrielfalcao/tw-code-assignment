@@ -3,6 +3,7 @@
 from tw_conference_manager.models import Talk
 from tw_conference_manager.models import Session
 from tw_conference_manager.models import TalkList
+from tests.unit.helpers import create_sequence_of_lightning_talks
 
 
 def test_session_allocate_talks():
@@ -93,7 +94,7 @@ def test_session_to_lines_with_9_consecutive_lightning():
         ends_at='9:30AM',
     )
     # And 2 sequential lightning talks proposed
-    proposed_talks = TalkList(*[Talk('Light {0}'.format(i), 'lightning') for i in range(1, 3)])
+    proposed_talks = create_sequence_of_lightning_talks(count=2)
 
     # When I allocate_talks the talks
     short_session.allocate_talks(proposed_talks)
@@ -115,7 +116,7 @@ def test_session_to_lines_with_10_consecutive_lightning():
     )
 
     # And 10 sequential lightning talks proposed to that session
-    proposed_talks = TalkList(*[Talk('Light {0}'.format(i), 'lightning') for i in range(1, 11)])
+    proposed_talks = create_sequence_of_lightning_talks(count=10)
 
     # When I allocate the talks
     _, remaining = short_session.allocate_talks(proposed_talks)

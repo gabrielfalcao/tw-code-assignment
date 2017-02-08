@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+from tw_conference_manager.models import TalkList
+from tests.unit.helpers import create_conference_and_schedule_talks
+
 
 TEST_INPUT = '''
 Writing Fast Tests Against Enterprise Rails 60min
@@ -21,3 +24,6 @@ Ruby on Rails Legacy App Maintenance 60min
 A World Without HackerNews 30min
 User Interface CSS in Rails Apps 30min
 '''
+
+
+default_proposed_talks = TalkList.from_text(TEST_INPUT)

@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# from tw_conference_manager.models import Track
-from tw_conference_manager.models import Talk
-from tw_conference_manager.models import TalkList
 from tw_conference_manager.models import ConferenceTrackManager
-from tests.unit.fixtures import TEST_INPUT
+from tests.unit.fixtures import default_proposed_talks
+from tests.unit.helpers import create_conference_and_schedule_talks
 
 
 def test_track_has_sessions():
@@ -24,10 +22,7 @@ def test_track_has_sessions():
 def test_conference_track_manager_allocate_talks():
     "models.ConferenceTrackManager.allocate_talks() fills up multiple tracks automatically"
 
-    conference = ConferenceTrackManager('TWConf')
-
-    talks = TalkList.from_text(TEST_INPUT)
-    scheduled = conference.schedule_talks(talks)
+    conference, scheduled = create_conference_and_schedule_talks(default_proposed_talks)
 
     # The conference should have 3 tracks
     conference.tracks.should.have.length_of(3)
@@ -39,10 +34,7 @@ def test_conference_track_manager_allocate_talks():
 def test_conference_track_manager_to_lines():
     "models.ConferenceTrackManager.to_lines() outputs the entire conference schedule"
 
-    conference = ConferenceTrackManager('TWConf')
-
-    talks = TalkList.from_text(TEST_INPUT)
-    conference.schedule_talks(talks)
+    conference, scheduled = create_conference_and_schedule_talks(default_proposed_talks)
 
     conference.to_lines().should.equal([
         'Track 1:',

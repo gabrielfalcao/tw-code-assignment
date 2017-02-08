@@ -4,7 +4,9 @@ from tw_conference_manager.models import Talk
 from tw_conference_manager.models import TalkList
 from tw_conference_manager.models import Track
 from tw_conference_manager.models import Session
-from tests.unit.fixtures import TEST_INPUT
+
+from tests.unit.helpers import create_track_and_allocate_talks
+from tests.unit.fixtures import default_proposed_talks
 
 
 def test_track_has_sessions():
@@ -32,26 +34,23 @@ def test_track_has_sessions():
 def test_track_filled_up():
     "models.Track.allocate_talks() fills up as much time as possible before networking event"
 
-    track1 = Track(1)
-    talks = TalkList(*[Talk('Talk {0}'.format(i), 60) for i in range(1, 11)])
-    allocated, remaining = track1.allocate_talks(talks)
+    ten_talks_of_60_minutes = [Talk('Talk {0}'.format(i), 60) for i in range(1, 11)]
+    allocated, remaining = create_track_and_allocate_talks(ten_talks_of_60_minutes)
     allocated.should.have.length_of(5)
+    remaining.should.have.length_of(5)
 
 
 def test_minimize_open_time():
     "models.Track.allocate_talk() will search through remaining talks to fill available timeslot"
 
-    track1 = Track(1)
-    talks = TalkList(
+    allocated, remaining = create_track_and_allocate_talks([
         Talk("Long", 210),
         Talk("Too Long", 60),
         Talk("Just Right", 30),
         Talk("Long Afternoon", 195),
         Talk("Too Long Afternoon", 60),
         Talk("Closest Afternoon", 30)
-    )
-
-    allocated, remaining = track1.allocate_talks(talks)
+    ])
     allocated.should.have.length_of(4)
 
 
@@ -60,28 +59,7 @@ def test_track_to_lines():
 
     track1 = Track(1)
 
-    talks = TalkList.from_text('''
-    Writing Fast Tests Against Enterprise Rails 60min
-    Overdoing it in Python 45min
-    Lua for the Masses 30min
-    Ruby Errors from Mismatched Gem Versions 45min
-    Common Ruby Errors 45min
-    Rails for Python Developers lightning
-    Communicating Over Distance 60min
-    Accounting-Driven Development 45min
-    Woah 30min
-    Sit Down and Write 30min
-    Pair Programming vs Noise 45min
-    Rails Magic 60min
-    Ruby on Rails: Why We Should Move On 60min
-    Clojure Ate Scala (on my project) 45min
-    Programming in the Boondocks of Seattle 30min
-    Ruby vs. Clojure for Back-End Development 30min
-    Ruby on Rails Legacy App Maintenance 60min
-    A World Without HackerNews 30min
-    User Interface CSS in Rails Apps 30min
-    ''')
-    allocated, remaining = track1.allocate_talks(talks)
+    allocated, remaining = track1.allocate_talks(default_proposed_talks)
 
     result = track1.to_lines()
     result.should.equal([
